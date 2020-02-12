@@ -44,7 +44,7 @@ player = Player(new_player, room['outside'])
 print(player)
 
 
-print(player.name, player.location)
+
 # Write a loop that:
 #
 # * Prints the current room name
