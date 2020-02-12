@@ -1,12 +1,15 @@
 from room import Room
 from player import Player
 # Declare all the rooms
+from colorama import init
+init()
+
 
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
+    'foyer':    Room("The Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
@@ -40,7 +43,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-new_player = input("What do you call yourself??? ~~~>")
+new_player = input('What do you call yourself??? ~~~>')
 
 player = Player(new_player, room['outside'])
 print(player)
@@ -72,29 +75,35 @@ while not directions == "q":
             player.location = player.location.w_to
             print(player)
         except:
-            print("Your path is blocked!!")
+            print('\033[31m'+'Your path is blocked!!')
+            print('\033[39m') 
         reset()
     elif directions == "n":
         try:
             player.location = player.location.n_to
             print(player)
         except:
-            print("Your path is blocked!!")
+            print('\033[31m'+'Your path is blocked!!')
+            print('\033[39m') 
         reset()
     elif directions == "e":
         try:
             player.location = player.location.e_to
             print(player)
         except:
-            print("Your path is blocked!!")
+            print('\033[31m'+'Your path is blocked!!')
+            print('\033[39m') 
         reset()
     elif directions == "s":
         try:
             player.location = player.location.s_to
             print(player)
         except:
-            print("Your path is blocked!!")
+            print('\033[31m'+'Your path is blocked!!')
+            print('\033[39m') 
         reset()
+#item logic
+
 
 print("Your adventure is over")
 #READ.
