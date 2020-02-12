@@ -107,7 +107,7 @@ while not directions == "q":
 #item logic
 
 
-print('\033[45m'+'Your adventure is over')
+print('\033[43m'+'\033[30m'+'Your adventure is over')
 print('\033[39m') 
 #READ.
 #EVALUATE.
