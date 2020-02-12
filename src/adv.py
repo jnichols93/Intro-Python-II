@@ -60,13 +60,15 @@ print(player)
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-print("[n] North [e] EAST [s] SOUTH [w] WEST")
+print('\033[92m'+'[n] North [e] EAST [s] SOUTH [w] WEST')
+print('\033[39m') 
 directions = input("~~~>")
 
 def reset():
-    print("[n] North [e] EAST [s] SOUTH [w] WEST")
+    print('\033[92m'+'[n] North [e] EAST [s] SOUTH [w] WEST')
+    print('\033[39m') 
     global directions
-    directions = input("~~~>")
+    directions = input('~~~>')
 
 
 while not directions == "q":
