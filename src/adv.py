@@ -21,7 +21,16 @@ to north. The smell of gold permeates the air."""),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. although there appears to be something interesing twords the northern part of the room, The only exit is to the south."""),
+
+'hidden': Room("Secret Passage", """You've found a secret passage leading north,
+will you follow it?"""),
+
+'tunnel': Room("Secret Tunnel", """The passage Leads to a tunnel heading west! The faint sound of music, more specifically Lou Bega's Mambo #5 can be heard hauntingly in the distance... do you dare proceed west?"""),
+
+'den': Room("Strange Cavern", """The tunnel Leads you to a large cavern, the source of the ominous music now apparent. An i pad hooked up to a large boombox sits in the corner amongst a pile of treasure in the north of the room..."""),
+
+'boombox': Room("The hobo encampment", """as you draw closer the faint smell of old Mc Donald's begins to permeate the air, the "treasure you thought you had found appears to be a bunch of garbage if im being honest... until you see it... a mix tape labeld mambo no 6!!!!!!"""),
 }
 
 #declare all Items
@@ -37,6 +46,14 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+room['treasure'].n_to = room['hiddewn']
+room['hidden'].s_to = room['treasure']
+room['hidden'].n_to = room['tunnel']
+room['tunnel'].e_to = room['hidden']
+room['tunnel'].w_to = room['den']
+room['den'].e_to = room['tunnel']
+room['den'].n_to = room['boombox']
+room['boombox'].s_to = room['den']
 
 #
 # Main
