@@ -1,5 +1,5 @@
 from room import Room
-
+from player import Player
 # Declare all the rooms
 
 room = {
@@ -38,7 +38,13 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+new_player = input("What do you call yourself??? ~~~>")
 
+player = Player(new_player, room['outside'])
+print(player)
+
+
+print(player.name, player.location)
 # Write a loop that:
 #
 # * Prints the current room name
@@ -49,3 +55,47 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+print("[n] North [e] EAST [s] SOUTH [w] WEST")
+directions = input("~~~>")
+
+def reset():
+    print("[n] North [e] EAST [s] SOUTH [w] WEST")
+    global directions
+    directions = input("~~~>")
+
+
+while not directions == "q":
+    if directions == "w":
+        try:
+            player.location = player.location.w_to
+            print(player)
+        except:
+            print("Your path is blocked!!")
+        reset()
+    elif directions == "n":
+        try:
+            player.location = player.location.n_to
+            print(player)
+        except:
+            print("Your path is blocked!!")
+        reset()
+    elif directions == "e":
+        try:
+            player.location = player.location.e_to
+            print(player)
+        except:
+            print("Your path is blocked!!")
+        reset()
+    elif directions == "s":
+        try:
+            player.location = player.location.s_to
+            print(player)
+        except:
+            print("Your path is blocked!!")
+        reset()
+
+print("Your adventure is over")
+#READ.
+#EVALUATE.
+#PRINT.
+#LOOP.
