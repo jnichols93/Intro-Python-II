@@ -1,10 +1,10 @@
 from room import Room
 from player import Player
-# Declare all the rooms
+from item import Item
 from colorama import init
 init()
 
-
+# Declare all the rooms
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
@@ -33,8 +33,6 @@ will you follow it?"""),
 'boombox': Room("The hobo encampment", """as you draw closer the faint smell of old Mc Donald's begins to permeate the air, the "treasure you thought you had found appears to be a bunch of garbage if im being honest... until you see it... a mix tape labeld mambo #6!!!!!!"""),
 }
 
-#declare all Items
-
 
 # Link rooms together
 
@@ -55,6 +53,8 @@ room['den'].e_to = room['tunnel']
 room['den'].n_to = room['boombox']
 room['boombox'].s_to = room['den']
 
+
+
 #
 # Main
 #
@@ -65,6 +65,15 @@ new_player = input('What do you call yourself??? ~~~>')
 player = Player(new_player, room['outside'])
 print(player)
 
+#declare all Items
+torch = Item("torch", "This will help me see where im going!")
+shovel = Item("shovel", "maybe I could use this??")
+old_map = Item("weathered map", "hey look theres directions!!!")
+
+# map items to rooms 
+room['outside'].items.append(torch)
+room['foyer'].items.append(old_map)
+room['overlook'].items.append(shovel)
 
 
 # Write a loop that:
@@ -76,30 +85,20 @@ print(player)
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
-
-
-
 # If the user enters "q", quit the game.
-print('\033[92m'+'[n] North [e] EAST [s] SOUTH [w] WEST')
-print('\033[39m') 
 
+print('\033[92m'+'[n] North ; [e] EAST ; [s] SOUTH ; [w] WEST ; [i] inventory "drop" [item]; "get" [item]')
+print('\033[39m') 
 directions = input("~~~>")
 
 def reset():
-    print('\033[92m'+'[n] North [e] EAST [s] SOUTH [w] WEST')
+    print('\033[92m'+'[n] North ; [e] EAST ; [s] SOUTH ; [w] WEST ; [i] inventory "drop" [item]; "get" [item]')
     print('\033[39m') 
     global directions
     directions = input('~~~>')
 
-    #def move(self, direction):
-     #   if getattr(self.location, f'{direction}_to'):
-      #  self.location = getattr(self.location, f'{direction}_to')
-   # else:
-    #    print('\033[31m'+'Your path is blocked!!')
-     #   print('\033[39m') 
 
 while not directions == "q":
-  
     if directions == "w":
         try:
             player.location = player.location.w_to
@@ -132,7 +131,26 @@ while not directions == "q":
             print('\033[31m'+'Your path is blocked!!')
             print('\033[39m') 
         reset()
-#item logic
+    elif directions == "i":
+            print("You've collected", player.items)
+            reset()
+   
+    elif " " in directions:
+        if "get" in directions:
+            command_line = directions.split(" ")
+            player.pick_up(command_line[1])
+            reset()
+        elif "drop" in directions:
+            command_line = directions.split(" ")
+            player.put_down(command_line[1])
+            reset()
+        else:
+            print("Please enter a valid command!")
+            reset()
+    else:
+        print("please enter a valid command")
+        reset()
+
 
 
 print('\033[43m'+'\033[30m''Your adventure is over')

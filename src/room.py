@@ -5,6 +5,6 @@ class Room:
         self.name = name
         self.description = description
         self.items = []
-    
+        
     def __repr__(self):
         return '\033[93m'+ self.name + '\n' +'\033[96m'+ self.description + '\n' + str(self.items)
