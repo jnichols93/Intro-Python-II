@@ -1,28 +1,25 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
 class Player:
-    def __init__(self, name, location):
+    def __init__(self, name, starting_room):
         self.name = name
-        self.location = location
+        self.current_room = starting_room
         self.items = []
-    
-    def __repr__(self):
-        return f"\033[35m{self.name} is currently exploring: {self.location}"
+    def travel(self, direction):
+        next_room = getattr(self.current_room, f"{direction}_to")
+        if next_room is not None:
+            self.current_room = next_room
+            print(self.current_room)
+        else:
+            print("You cannot move in that direction")
 
-    def pick_up(self, the_item):
-        for item in self.location.items:
-            if the_item in item.name:
-                self.items.append(item)
-                self.location.items.remove(item)
-                print(f"You have picked up {item.name}")
-            else:
-                print("That item is not in your current location.")
     
-    def put_down(self, the_item):
-        for item in self.items:
-            if the_item in item.name:
-                self.location.items.append(item)
-                self.items.remove(item)
-                print(f"You have put down {item.name}.")
-            else:
-                print("That item is not currently in your player's backpack")
+    def get_item(self, pickup_item):
+        self.items.append(pickup_item)
+
+    def drop_item(self, drop_item):
+        self.items.remove(drop_item)
+        self.current_room.items.append(drop_item)
+
+    def __str__(self):
+        return f'{self.name} is in the {self.current_room}. \n {self.current_room.description}'

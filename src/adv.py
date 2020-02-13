@@ -53,20 +53,8 @@ room['den'].e_to = room['tunnel']
 room['den'].n_to = room['boombox']
 room['boombox'].s_to = room['den']
 
-
-
-#
-# Main
-#
-
-# Make a new player object that is currently in the 'outside' room.
-new_player = input('What do you call yourself??? ~~~>')
-
-player = Player(new_player, room['outside'])
-print(player)
-
 #declare all Items
-torch = Item("torch", "This will help me see where im going!")
+torch = Item("A Torch", "This will help me see where im going!")
 shovel = Item("shovel", "maybe I could use this??")
 old_map = Item("weathered map", "hey look theres directions!!!")
 
@@ -75,9 +63,11 @@ room['outside'].items.append(torch)
 room['foyer'].items.append(old_map)
 room['overlook'].items.append(shovel)
 
-
+# Make a new player object that is currently in the 'outside' room.
 # Write a loop that:
-#
+player = Player(input("What is your name? "), room['outside'])
+print(f"Hello, {player.name}.")
+
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
@@ -86,72 +76,14 @@ room['overlook'].items.append(shovel)
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-
-print('\033[92m'+'[n] North ; [e] EAST ; [s] SOUTH ; [w] WEST ; [i] inventory "drop" [item]; "get" [item]')
-print('\033[39m') 
-directions = input("~~~>")
-
-def reset():
-    print('\033[92m'+'[n] North ; [e] EAST ; [s] SOUTH ; [w] WEST ; [i] inventory "drop" [item]; "get" [item]')
-    print('\033[39m') 
-    global directions
-    directions = input('~~~>')
-
-
-while not directions == "q":
-    if directions == "w":
-        try:
-            player.location = player.location.w_to
-            print(player)
-        except:
-            print('\033[31m'+'Your path is blocked!!')
-            print('\033[39m') 
-        reset()
-    elif directions == "n":
-        try:
-            player.location = player.location.n_to
-            print(player)
-        except:
-            print('\033[31m'+'Your path is blocked!!')
-            print('\033[39m') 
-        reset()
-    elif directions == "e":
-        try:
-            player.location = player.location.e_to
-            print(player)
-        except:
-            print('\033[31m'+'Your path is blocked!!')
-            print('\033[39m') 
-        reset()
-    elif directions == "s":
-        try:
-            player.location = player.location.s_to
-            print(player)
-        except:
-            print('\033[31m'+'Your path is blocked!!')
-            print('\033[39m') 
-        reset()
-    elif directions == "i":
-            print("You've collected", player.items)
-            reset()
-   
-    elif " " in directions:
-        if "get" in directions:
-            command_line = directions.split(" ")
-            player.pick_up(command_line[1])
-            reset()
-        elif "drop" in directions:
-            command_line = directions.split(" ")
-            player.put_down(command_line[1])
-            reset()
-        else:
-            print("Please enter a valid command!")
-            reset()
+print(player.current_room)
+while True:
+    cmd = input("-> ").lower()
+    if cmd in ["n", "s", "e", "w"]:
+        # Move to that room
+        player.travel(cmd)
+    elif cmd == "q":
+        print('\033[43m'+'\033[30m''Your adventure is over')
+        exit()
     else:
-        print("please enter a valid command")
-        reset()
-
-
-
-print('\033[43m'+'\033[30m''Your adventure is over')
-print('\033[39m') 
+        print("I did not understand that command.")
