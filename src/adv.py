@@ -76,12 +76,8 @@ print(player)
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
-def move(self, direction):
-    if getattr(self.location, f'{direction}_to'):
-        self.location = getattr(self.location, f'{direction}_to')
-    else:
-        print('\033[31m'+'Your path is blocked!!')
-        print('\033[39m') 
+
+
 
 # If the user enters "q", quit the game.
 print('\033[92m'+'[n] North [e] EAST [s] SOUTH [w] WEST')
@@ -95,8 +91,15 @@ def reset():
     global directions
     directions = input('~~~>')
 
+    #def move(self, direction):
+     #   if getattr(self.location, f'{direction}_to'):
+      #  self.location = getattr(self.location, f'{direction}_to')
+   # else:
+    #    print('\033[31m'+'Your path is blocked!!')
+     #   print('\033[39m') 
 
 while not directions == "q":
+  
     if directions == "w":
         try:
             player.location = player.location.w_to
