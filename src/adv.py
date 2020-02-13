@@ -30,7 +30,7 @@ will you follow it?"""),
 
 'den': Room("Strange Cavern", """The tunnel Leads you to a large cavern, the source of the ominous music now apparent. An i pad hooked up to a large boombox sits in the corner amongst a pile of treasure in the north of the room..."""),
 
-'boombox': Room("The hobo encampment", """as you draw closer the faint smell of old Mc Donald's begins to permeate the air, the "treasure you thought you had found appears to be a bunch of garbage if im being honest... until you see it... a mix tape labeld mambo no 6!!!!!!"""),
+'boombox': Room("The hobo encampment", """as you draw closer the faint smell of old Mc Donald's begins to permeate the air, the "treasure you thought you had found appears to be a bunch of garbage if im being honest... until you see it... a mix tape labeld mambo #6!!!!!!"""),
 }
 
 #declare all Items
@@ -46,7 +46,7 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
-room['treasure'].n_to = room['hiddewn']
+room['treasure'].n_to = room['hidden']
 room['hidden'].s_to = room['treasure']
 room['hidden'].n_to = room['tunnel']
 room['tunnel'].e_to = room['hidden']
@@ -76,9 +76,17 @@ print(player)
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
+def move(self, direction):
+    if getattr(self.location, f'{direction}_to'):
+        self.location = getattr(self.location, f'{direction}_to')
+    else:
+        print('\033[31m'+'Your path is blocked!!')
+        print('\033[39m') 
+
 # If the user enters "q", quit the game.
 print('\033[92m'+'[n] North [e] EAST [s] SOUTH [w] WEST')
 print('\033[39m') 
+
 directions = input("~~~>")
 
 def reset():
@@ -126,7 +134,3 @@ while not directions == "q":
 
 print('\033[43m'+'\033[30m''Your adventure is over')
 print('\033[39m') 
-#READ.
-#EVALUATE.
-#PRINT.
-#LOOP.
