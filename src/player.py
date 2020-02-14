@@ -1,25 +1,30 @@
-# Write a class to hold player information, e.g. what room they are in
-# currently.
+from item import LightSource
 class Player:
-    def __init__(self, name, starting_room):
+    def __init__(self, name, current_room, inventory=[]):
         self.name = name
-        self.current_room = starting_room
-        self.items = []
-    def travel(self, direction):
-        next_room = getattr(self.current_room, f"{direction}_to")
-        if next_room is not None:
-            self.current_room = next_room
-            print(self.current_room)
+        self.current_room = current_room
+        self.inventory = inventory
+        for item in self.inventory:
+            if item is isinstance('item', LightSource):
+				# self.current_room.is_light=True
+                print("True")
+            else:
+                print("False")
+    def take(self, item):
+        if item in self.current_room.items:
+            item.on_take()
+            self.current_room.items.remove(item)
+            self.inventory.append(item)
         else:
-            print("You cannot move in that direction")
-
-    
-    def get_item(self, pickup_item):
-        self.items.append(pickup_item)
-
-    def drop_item(self, drop_item):
-        self.items.remove(drop_item)
-        self.current_room.items.append(drop_item)
-
-    def __str__(self):
-        return f'{self.name} is in the {self.current_room}. \n {self.current_room.description}'
+            print('\nNo such item is here!\n')
+    def drop(self, item):
+        if item in self.inventory:
+            item.on_drop()
+            self.inventory.remove(item)
+            self.current_room.items.append(item)
+        else:
+            print('\nYou are carrying no such item!\n')
+    def inven(self):
+        print('\nYou are carrying:\n')
+        for item in self.inventory:
+            print(item.name)
